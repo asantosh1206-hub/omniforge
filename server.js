@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(cors());
 
-// TTS Endpoint (replicates the Vite plugin)
+// TTS Endpoint
 app.get('/api/tts', async (req, res) => {
   const text = req.query.text;
   const lang = req.query.lang || 'en';
@@ -68,12 +68,12 @@ app.use('/api/pollinations', createProxyMiddleware({
 // Serve React Static Files
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Fallback for React Router SPA
-app.get('*', (req, res) => {
+// Fallback for React Router SPA (Express 5 compatible)
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(\`Server is running on port \${PORT}\`);
+  console.log("Server is running on port " + PORT);
 });
