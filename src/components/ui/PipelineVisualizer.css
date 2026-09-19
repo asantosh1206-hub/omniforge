@@ -1,0 +1,193 @@
+.pipeline-visualizer {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px 24px;
+  margin-top: 24px;
+}
+
+.pipeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.pipeline-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+.pipeline-timer {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.pipeline-progress-bar {
+  height: 4px;
+  background-color: var(--bg-surface);
+  border-radius: 2px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.pipeline-progress-fill {
+  height: 100%;
+  background-color: var(--accent-primary);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.pipeline-stages {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+}
+
+.pipeline-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  min-width: 120px;
+}
+
+.stage-node {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.4s ease;
+  background-color: var(--bg-secondary);
+}
+
+.stage-node.pending {
+  opacity: 0.5;
+}
+
+.stage-node.active {
+  border-style: solid;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px rgba(59,130,246,0.3);
+  animation: pipelinePulse 2s ease-in-out infinite;
+}
+
+.stage-node.completed {
+  border-style: solid;
+  border-color: var(--status-success);
+  background-color: color-mix(in srgb, var(--status-success) 10%, transparent);
+}
+
+.stage-node .stage-icon {
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.stage-node.active .stage-icon {
+  color: var(--accent-primary);
+  opacity: 0;
+}
+
+.stage-node.completed .stage-icon {
+  color: var(--status-success);
+  opacity: 0;
+}
+
+.stage-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-spinner {
+  animation: spin 1s linear infinite;
+  color: var(--accent-primary);
+}
+
+.stage-check {
+  color: var(--status-success);
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn { 
+  from { transform: scale(0); } 
+  to { transform: scale(1); } 
+}
+
+.stage-label {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.stage-label.active {
+  color: var(--accent-primary);
+}
+
+.stage-label.completed {
+  color: var(--status-success);
+}
+
+.stage-sublabel {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary, var(--text-secondary));
+  margin-top: 2px;
+  text-align: center;
+}
+
+.pipeline-connector {
+  flex: 1;
+  height: 2px;
+  background-color: var(--border);
+  position: relative;
+  margin-top: 32px;
+  min-width: 40px;
+}
+
+.pipeline-connector .connector-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--accent-primary);
+  transition: width 0.5s ease;
+  border-radius: 1px;
+  width: 0%;
+}
+
+.pipeline-connector.completed .connector-fill {
+  width: 100%;
+  background-color: var(--status-success);
+}
+
+.pipeline-connector.active .connector-fill {
+  width: 50%;
+  background-color: var(--accent-primary);
+}
+
+@keyframes pipelinePulse { 
+  0%, 100% { box-shadow: 0 0 20px rgba(59,130,246,0.2); } 
+  50% { box-shadow: 0 0 30px rgba(59,130,246,0.5); } 
+}
+
+@keyframes spin { 
+  to { transform: rotate(360deg); } 
+}

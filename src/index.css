@@ -1,0 +1,298 @@
+/* ==========================================================================
+   CSS Reset
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   Theme Variables
+   ========================================================================== */
+:root, [data-theme="dark"] {
+  --bg-primary: #0F1117;
+  --bg-secondary: #161923;
+  --bg-elevated: #1E2130;
+  --bg-surface: #262A3A;
+  
+  --text-primary: #E8EAF0;
+  --text-secondary: #8B91A8;
+  --text-tertiary: #5A6078;
+  
+  --border: #2A2E3F;
+  --border-light: #1E2235;
+  
+  --accent-primary: #3B82F6;
+  --accent-hover: #2563EB;
+  --accent-subtle: rgba(59, 130, 246, 0.1);
+  
+  --status-success: #22C55E;
+  --status-success-bg: rgba(34, 197, 94, 0.1);
+  --status-warning: #F59E0B;
+  --status-warning-bg: rgba(245, 158, 11, 0.1);
+  --status-danger: #EF4444;
+  --status-danger-bg: rgba(239, 68, 68, 0.1);
+  --status-info: #6366F1;
+  --status-info-bg: rgba(99, 102, 241, 0.1);
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.4s ease;
+}
+
+[data-theme="light"] {
+  --bg-primary: #F8F9FB;
+  --bg-secondary: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-surface: #F1F3F7;
+  
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  
+  --border: #E2E5ED;
+  --border-light: #F0F1F5;
+  
+  --accent-subtle: rgba(59, 130, 246, 0.08);
+  
+  --status-success-bg: rgba(34, 197, 94, 0.08);
+  --status-warning-bg: rgba(245, 158, 11, 0.08);
+  --status-danger-bg: rgba(239, 68, 68, 0.08);
+  --status-info-bg: rgba(99, 102, 241, 0.08);
+  
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 400;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+h1 {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h4 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+p, body {
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+small {
+  font-size: 0.8125rem; /* 13px */
+}
+
+/* ==========================================================================
+   Base Styles & Components
+   ========================================================================== */
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Specific overrides so things like hover states don't feel sluggish */
+button, a, input, select, textarea {
+  transition: all var(--transition-fast);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent-subtle);
+  color: var(--accent-primary);
+}
+
+/* Focus visible styling for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Utility Classes & Animations
+   ========================================================================== */
+
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-success { color: var(--status-success); }
+.text-warning { color: var(--status-warning); }
+.text-danger { color: var(--status-danger); }
+.text-info { color: var(--status-info); }
+
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-elevated { background-color: var(--bg-elevated); }
+.bg-surface { background-color: var(--bg-surface); }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-normal) forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft var(--transition-normal) forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(var(--status-info-rgb, 99, 102, 241), 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(var(--status-info-rgb, 99, 102, 241), 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(var(--status-info-rgb, 99, 102, 241), 0);
+  }
+}
+
+.pulse-indicator {
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}

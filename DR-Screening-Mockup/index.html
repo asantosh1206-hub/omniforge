@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Retinopathy XAI Screening</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Diabetic Retinopathy XAI Screening</h1>
+            <p>AI-Powered Diagnostic Tool with Explainable Heatmaps</p>
+        </header>
+
+        <main id="main-content">
+            <!-- Upload View -->
+            <section id="upload-view" class="view active">
+                <div class="upload-box" id="upload-box">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="upload-content">
+                        <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p class="upload-text">Click to upload or drag & drop a retinal scan</p>
+                        <p class="upload-subtext">Supports PNG, JPG, JPEG</p>
+                        <button class="btn primary-btn" onclick="document.getElementById('file-input').click()">Select Image</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading View -->
+            <section id="loading-view" class="view">
+                <div class="loader-container">
+                    <div class="spinner"></div>
+                    <h2 class="loading-text">Analyzing Scan...</h2>
+                    <p class="loading-subtext">Running deep learning model and computing Grad-CAM...</p>
+                </div>
+            </section>
+
+            <!-- Result View -->
+            <section id="result-view" class="view">
+                <div class="result-grid">
+                    <div class="image-panel">
+                        <div class="image-wrapper" id="image-wrapper">
+                            <img id="uploaded-image" src="" alt="Retinal Scan">
+                            <div class="heatmap-overlay" id="heatmap-overlay"></div>
+                        </div>
+                        <div class="image-controls">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle-heatmap" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span>Show XAI Heatmap</span>
+                        </div>
+                    </div>
+                    
+                    <div class="diagnosis-panel">
+                        <h2>Diagnosis Result</h2>
+                        
+                        <div class="result-card" id="result-card">
+                            <div class="diagnosis-header">
+                                <span class="diagnosis-label" id="diagnosis-label">Mild DR</span>
+                                <span class="severity-badge" id="severity-badge">Level 1</span>
+                            </div>
+                            
+                            <div class="confidence-section">
+                                <div class="confidence-header">
+                                    <span>Model Confidence</span>
+                                    <span id="confidence-value">92.4%</span>
+                                </div>
+                                <div class="confidence-bar-bg">
+                                    <div class="confidence-bar-fill" id="confidence-bar-fill"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="explanation-section">
+                                <h3>Clinical Explanation</h3>
+                                <p id="explanation-text">Model detected early-stage microaneurysms consistent with mild DR.</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn secondary-btn reset-btn" id="reset-btn">
+                            <svg class="reset-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Analyze Another Image
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
