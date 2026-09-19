@@ -10,9 +10,9 @@ const initialState = {
   generatedOutputs: {}, // { jobId: { outputType: content } }
   apiConfig: {
     primaryProvider: 'grok', // 'auto', 'grok' or 'nvidia'
-    grokApiKey: '',
+    grokApiKey: import.meta.env.VITE_GROK_API_KEY || '',
     grokModel: 'grok-3',
-    nvidiaApiKey: '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',
+    nvidiaApiKey: import.meta.env.VITE_NVIDIA_API_KEY || '',
     nvidiaModel: 'nvidia/llama-3.1-nemotron-70b-instruct',
     audience: 'Professional', // 'Executive', 'Professional', 'General', 'Technical'
     tone: 'Objective', // 'Objective', 'Urgent', 'Authoritative', 'Accessible'
