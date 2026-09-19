@@ -6,11 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js"
   },
   "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "google-tts-api": "^2.0.2",
     "html2pdf.js": "^0.14.0",
+    "http-proxy-middleware": "^4.2.0",
     "i18next": "^26.4.2",
     "lucide-react": "^1.45.0",
     "marked": "^18.0.13",
