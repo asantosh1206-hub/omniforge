@@ -146,28 +146,30 @@ export default function TransformPage() {
         
         setPipelineStage(2); // AI Process
         
-                // Process concurrently in chunks of 3 to avoid massive 429s, but keep it extremely fast
-        const chunkSize = 3;
-        for (let i = 0; i < selectedOutputs.length; i += chunkSize) {
-          const chunk = selectedOutputs.slice(i, i + chunkSize);
-          await Promise.all(chunk.map(async (outputType) => {
-            try {
-              const content = await generateIntelligence(combinedText, outputType, state.apiConfig, language);
-              dispatch({
-                type: 'ADD_GENERATED_OUTPUT',
-                payload: { jobId, outputType, content }
-              });
-            } catch (err) {
-              console.error(`Generation failed for ${outputType}:`, err);
-              dispatch({
-                type: 'ADD_GENERATED_OUTPUT',
-                payload: { jobId, outputType, content: `Error generating content: ${err.message}` }
-              });
-            }
-          }));
-          // Tiny delay between chunks to let Groq TPM token bucket drain safely
-          if (i + chunkSize < selectedOutputs.length) {
-            await new Promise(r => setTimeout(r, 6000));
+                // Smart split: text outputs concurrent (fast 11B), diagrams sequential (heavy 120B)
+        const diagramTypes = ['infographic', 'arch-diagram', 'flowchart'];
+        const textOutputs = selectedOutputs.filter(t => !diagramTypes.includes(t));
+        const diagramOutputs = selectedOutputs.filter(t => diagramTypes.includes(t));
+
+        // Fire all text outputs concurrently (llama-11B handles this easily)
+        await Promise.all(textOutputs.map(async (outputType) => {
+          try {
+            const content = await generateIntelligence(combinedText, outputType, state.apiConfig, language);
+            dispatch({ type: 'ADD_GENERATED_OUTPUT', payload: { jobId, outputType, content } });
+          } catch (err) {
+            console.error(`Generation failed for ${outputType}:`, err);
+            dispatch({ type: 'ADD_GENERATED_OUTPUT', payload: { jobId, outputType, content: `Error generating content: ${err.message}` } });
+          }
+        }));
+
+        // Process diagrams one at a time (nemotron-120B overloads with concurrent requests)
+        for (const outputType of diagramOutputs) {
+          try {
+            const content = await generateIntelligence(combinedText, outputType, state.apiConfig, language);
+            dispatch({ type: 'ADD_GENERATED_OUTPUT', payload: { jobId, outputType, content } });
+          } catch (err) {
+            console.error(`Generation failed for ${outputType}:`, err);
+            dispatch({ type: 'ADD_GENERATED_OUTPUT', payload: { jobId, outputType, content: `Error generating content: ${err.message}` } });
           }
         }
         
